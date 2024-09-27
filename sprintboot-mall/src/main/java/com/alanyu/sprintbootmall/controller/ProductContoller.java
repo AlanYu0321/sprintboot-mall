@@ -12,44 +12,56 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ProductContoller {
 
-    @Autowired
-    private ProductService productService;
+	@Autowired
+	private ProductService productService;
 
-    @PostMapping(value = "/products")
-    public ResponseEntity<Product> getProduct(@RequestBody Product product) {
+	@PostMapping(value = "/products")
+	public ResponseEntity<Product> getProduct(@RequestBody Product product) {
 
-        Product responseProduct = productService.getProductById(product.getProductId());
+		Product responseProduct = productService.getProductById(product.getProductId());
 
-        if (responseProduct != null) {
-            return ResponseEntity.status(HttpStatus.OK).body(responseProduct);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-    }
+		if (responseProduct != null) {
+			return ResponseEntity.status(HttpStatus.OK).body(responseProduct);
+		} else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+	}
 
-    @PostMapping(value = "/insertProducts")
-    public ResponseEntity<Product> insertProduct(@RequestBody Product product) {
+	@PostMapping(value = "/insertProducts")
+	public ResponseEntity<Product> insertProduct(@RequestBody Product product) {
 
-        Product responseProduct = productService.insertProduct(product);
+		Product responseProduct = productService.insertProduct(product);
 
-        if (responseProduct != null) {
-            return ResponseEntity.status(HttpStatus.OK).body(responseProduct);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-    }
+		if (responseProduct != null) {
+			return ResponseEntity.status(HttpStatus.OK).body(responseProduct);
+		} else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+	}
 
-    @PostMapping(value = "/deleteProductById")
-    public ResponseEntity<Product> deleteProductById(@RequestBody Product product) {
+	@PostMapping(value = "/deleteProductById")
+	public ResponseEntity<String> deleteProductById(@RequestBody Product product) {
 
-        Product responseProduct = productService.deleteProductById(product);
+		Product responseProduct = productService.deleteProductById(product.getProductId());
 
-        if (responseProduct != null) {
-            return ResponseEntity.status(HttpStatus.OK).body(responseProduct);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-    }
+		if (responseProduct != null) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		} else {
+			return ResponseEntity.status(HttpStatus.OK).body("Product has been delete");
+		}
 
+	}
 
+	@PostMapping(value = "/updateProductById")
+	public ResponseEntity<Product> updateProductById(@RequestBody Product product) {
+
+		Product responseProduct = productService.updateProductById(product);
+
+		if (responseProduct != null) {
+			return ResponseEntity.status(HttpStatus.OK).body(responseProduct);
+		} else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+
+	}
 }

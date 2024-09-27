@@ -16,7 +16,7 @@ public class Product {
 	private String imageUrl;
 	private Integer price;
 	private Integer stock;
-	private String deiscription;
+	private String description;
 	private Date createdDate;
 	private Date lastmodifiedDate;
 

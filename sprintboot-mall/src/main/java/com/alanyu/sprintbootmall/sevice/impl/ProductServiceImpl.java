@@ -28,10 +28,14 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public Product deleteProductById(Product product) {
+	public Product deleteProductById(Integer productId) {
+		productDao.deleteProduct(productId);
+		return productDao.getProductById(productId);
+	}
 
-
-
-		return null;
+	@Override
+	public Product updateProductById(Product product) {
+		Product returnProduct = productDao.updateProductById(product);
+		return returnProduct;
 	}
 }

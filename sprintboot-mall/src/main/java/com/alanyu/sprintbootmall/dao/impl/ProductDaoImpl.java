@@ -1,37 +1,16 @@
 package com.alanyu.sprintbootmall.dao.impl;
 
-import static java.sql.DriverManager.getConnection;
-
 import com.alanyu.sprintbootmall.dao.ProductDao;
 import com.alanyu.sprintbootmall.model.Product;
 import com.alanyu.sprintbootmall.rowMapper.ProductRowMapper;
-import java.beans.ConstructorProperties;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Types;
-import java.util.Properties;
-import javax.sql.DataSource;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.jdbc.DataSourceBuilder;
-import org.springframework.context.annotation.Bean;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.SingleColumnRowMapper;
-import org.springframework.jdbc.core.SqlParameter;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.jdbc.core.simple.SimpleJdbcCall;
-import org.springframework.jdbc.datasource.DataSourceUtils;
-import org.springframework.stereotype.Component;
-
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.sql.DataSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
+import org.springframework.stereotype.Component;
 
 @Component
 public class ProductDaoImpl implements ProductDao {
@@ -70,12 +49,48 @@ public class ProductDaoImpl implements ProductDao {
 				.addValue("i_image_url", product.getImageUrl()).addValue("i_price", product.getPrice())
 				.addValue("i_stock", product.getStock())
 				.addValue("i_description",
-						product.getDeiscription());
+						product.getDescription());
 		Map<String, Object> out = simpleJdbcCall.execute(in);
 		Integer productId = (Integer) out.get("o_product_id");
 
 		return productId;
 
+	}
+
+	@Override
+	public Product deleteProduct(Integer productId) {
+
+		SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(dataSource).withProcedureName(
+				"SP_DELETE_PRODUCT_BY_ID").returningResultSet("product", new ProductRowMapper());
+
+		SqlParameterSource in = new MapSqlParameterSource().addValue("i_product_id", productId);
+		Map<String, Object> out = simpleJdbcCall.execute(in);
+		List<Product> productList = (List<Product>) out.get("product");
+		if (null == productList) {
+			return null;
+		} else {
+			return productList.get(0);
+		}
+
+	}
+
+	@Override
+	public Product updateProductById(Product product) {
+
+		SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(dataSource).withProcedureName(
+				"SP_UPDATE_PRODUCT").returningResultSet("product", new ProductRowMapper());
+
+		SqlParameterSource in = new MapSqlParameterSource().addValue("i_product_id",
+						product.getProductId()).addValue("i_product_name",
+						product.getProdcutName()).addValue("i_category", product.getCategory())
+				.addValue("i_image_url", product.getImageUrl()).addValue("i_price", product.getPrice())
+				.addValue("i_stock", product.getStock())
+				.addValue("i_description",
+						product.getDescription());
+		Map<String, Object> out = simpleJdbcCall.execute(in);
+		List<Product> productList = (List<Product>) out.get("product");
+
+		return productList.stream().findAny().orElse(null);
 	}
 }
 
