@@ -26,4 +26,16 @@ public class ProductContoller {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
+
+    @PostMapping(value = "/insertProducts")
+    public ResponseEntity<Product> insertProduct(@RequestBody Product product) {
+
+        Product responseProduct = productService.insertProduct(product);
+
+        if (responseProduct != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(responseProduct);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
 }
