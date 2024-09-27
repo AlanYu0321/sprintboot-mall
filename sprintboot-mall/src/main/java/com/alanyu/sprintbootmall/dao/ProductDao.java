@@ -9,4 +9,6 @@ public interface ProductDao {
 
     Integer insertProduct(Product product);
 
+
+
 }

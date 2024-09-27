@@ -38,4 +38,18 @@ public class ProductContoller {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
+
+    @PostMapping(value = "/deleteProductById")
+    public ResponseEntity<Product> deleteProductById(@RequestBody Product product) {
+
+        Product responseProduct = productService.deleteProductById(product);
+
+        if (responseProduct != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(responseProduct);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+
 }

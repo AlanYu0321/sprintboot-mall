@@ -6,4 +6,5 @@ public interface ProductService {
 
     Product getProductById(Integer productId) ;
     Product insertProduct(Product product) ;
+    Product deleteProductById(Product product);
 }
