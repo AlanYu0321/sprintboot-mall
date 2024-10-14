@@ -1,7 +1,6 @@
-package com.alanyu.sprintbootmall.Repository;
+package com.alanyu.sprintbootmall.repository;
 
 import com.alanyu.sprintbootmall.model.ChatRoom;
-import com.alanyu.sprintbootmall.model.Message;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

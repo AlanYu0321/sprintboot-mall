@@ -1,6 +1,6 @@
 package com.alanyu.sprintbootmall.sevice.impl;
 
-import com.alanyu.sprintbootmall.Repository.MessageRepository;
+import com.alanyu.sprintbootmall.repository.MessageRepository;
 import com.alanyu.sprintbootmall.model.Message;
 import com.alanyu.sprintbootmall.sevice.ChatRoomService;
 import com.alanyu.sprintbootmall.sevice.MessageService;

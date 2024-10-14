@@ -1,4 +1,4 @@
-package com.alanyu.sprintbootmall.Repository;
+package com.alanyu.sprintbootmall.repository;
 
 import com.alanyu.sprintbootmall.model.Message;
 import java.util.List;

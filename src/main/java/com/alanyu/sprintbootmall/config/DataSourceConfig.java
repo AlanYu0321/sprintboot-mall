@@ -1,4 +1,4 @@
-package com.alanyu.sprintbootmall.Config;
+package com.alanyu.sprintbootmall.config;
 
 import javax.sql.DataSource;
 import org.springframework.boot.context.properties.ConfigurationProperties;
